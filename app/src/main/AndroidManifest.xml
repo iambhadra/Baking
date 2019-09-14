@@ -13,9 +13,12 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".StepDetails"
+            android:configChanges="orientation"
             android:label="@string/title_activity_step_details"></activity>
-        <activity android:name=".RecipeItem" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".RecipeItem"
+            android:configChanges="orientation"/>
+        <activity android:name=".MainActivity"
+            android:configChanges="orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

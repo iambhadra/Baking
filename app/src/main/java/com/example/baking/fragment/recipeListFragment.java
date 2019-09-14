@@ -1,15 +1,20 @@
 package com.example.baking.fragment;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -29,8 +34,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
+
 public class recipeListFragment extends Fragment implements RecipeListAdapter.recipeClickListener {
     RecyclerView rv_recipeList;
+    GridLayoutManager mLayoutManager;
+    GridLayoutManager gridLayoutManager;
+    private final String KEY_RECYCLER_STATE = "recycler_state";
+    private static Bundle mBundleRecyclerViewState;
+    private Parcelable mListState = null;
     List<recipes> recipesList = new ArrayList<>();
     final RecipeListAdapter mRecipeListAdapter = new RecipeListAdapter(this, this);
 
@@ -40,6 +52,16 @@ public class recipeListFragment extends Fragment implements RecipeListAdapter.re
         final List<recipes>[] recipeList = null;
 
 
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(getActivity().getResources().getConfiguration().orientation == ORIENTATION_PORTRAIT) {
+            mLayoutManager = new GridLayoutManager(getContext(),1);
+        }else{
+            mLayoutManager = new GridLayoutManager(getContext(),2);
+        }
     }
 
     @Nullable
@@ -52,15 +74,6 @@ public class recipeListFragment extends Fragment implements RecipeListAdapter.re
         return view;
     }
 
-    private void PrepareRecipeList() {
-
-        loadRecipeFromInternet();
-
-    }
-
-    /*  public interface RecipeSelection{
-          public void onRecipeSelected
-      }*/
     @Override
     public void onRecipeClicked(int position) {
         Intent intent = new Intent(getContext(), RecipeItem.class);
@@ -89,11 +102,7 @@ public class recipeListFragment extends Fragment implements RecipeListAdapter.re
                         Global.recipeResponse = recipesList;
                         Log.d("Number of movies: ", Integer.toString(recipesList.size()));
                         if (recipesList != null) {
-                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-                            mRecipeListAdapter.setRecipesList(recipesList);
-                            rv_recipeList.setLayoutManager(mLayoutManager);
-                            rv_recipeList.setItemAnimator(new DefaultItemAnimator());
-                            rv_recipeList.setAdapter(mRecipeListAdapter);
+                            PrepareRecipeList();
                         }
                     }
                 } else {
@@ -107,4 +116,58 @@ public class recipeListFragment extends Fragment implements RecipeListAdapter.re
             }
         });
     }
+    private void PrepareRecipeList() {
+
+        mRecipeListAdapter.setRecipesList(recipesList);
+        rv_recipeList.setLayoutManager(mLayoutManager);
+        rv_recipeList.setItemAnimator(new DefaultItemAnimator());
+        rv_recipeList.setAdapter(mRecipeListAdapter);
+
+    }
+
+    /*
+     * Here we are saving the state of the recycer view to restore after rotation
+     * */
+    @Override
+    public void onPause() {
+        super.onPause();
+        mBundleRecyclerViewState = new Bundle();
+        mListState = rv_recipeList.getLayoutManager().onSaveInstanceState();
+        mBundleRecyclerViewState.putParcelable(KEY_RECYCLER_STATE, mListState);
+    }
+    /*
+     * In the below configuration , we are defining the restored state along the number columns on orientation of device.
+     * */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        //  columns = getResources().getInteger(R.integer.gallery_columns);
+
+        if (mBundleRecyclerViewState != null) {
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    mListState = mBundleRecyclerViewState.getParcelable(KEY_RECYCLER_STATE);
+                    rv_recipeList.getLayoutManager().onRestoreInstanceState(mListState);
+
+                }
+            }, 50);
+        }
+
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+
+            mLayoutManager.setSpanCount(2);
+
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+
+            mLayoutManager.setSpanCount(1);
+
+        }
+        rv_recipeList.setLayoutManager(mLayoutManager);
+    }
+
+
+
 }
