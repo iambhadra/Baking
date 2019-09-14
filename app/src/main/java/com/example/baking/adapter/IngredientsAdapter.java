@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.baking.R;
-import com.example.baking.fragment.recipeStepsFragment;
+import com.example.baking.fragment.IngredientStepsFragment;
 import com.example.baking.models.ingredients;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
   //  LayoutInflater mLayoutInflater;
     List<ingredients> ingredients = new ArrayList<>();
 
-    public IngredientsAdapter(recipeStepsFragment context){
+    public IngredientsAdapter(IngredientStepsFragment context){
      //   mLayoutInflater = LayoutInflater.from(context.getContext());
         notifyDataSetChanged();
 
@@ -48,9 +48,12 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     @Override
     public void onBindViewHolder(@NonNull IngredientsAdapter.MyViewHolder myViewHolder, int i) {
         ingredients ingredients = this.ingredients.get(i);
-        tv_quantity.setText(Float.toString(ingredients.getQuantity()));
-        tv_measure.setText(ingredients.getMeasure());
-        tv_item_name.setText(ingredients.getIngredient());
+        String quantity = Float.toString(ingredients.getQuantity());
+        String measure = ingredients.getMeasure();
+        String ingredient = ingredients.getIngredient();
+        tv_quantity.setText((quantity==null || quantity.isEmpty()) ? "NA":quantity);
+        tv_measure.setText((measure == null || measure.isEmpty())?"NA":measure);
+        tv_item_name.setText((ingredient == null || ingredient.isEmpty())? "NA":ingredient);
 
     }
 

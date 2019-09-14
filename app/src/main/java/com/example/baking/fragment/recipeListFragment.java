@@ -1,8 +1,5 @@
 package com.example.baking.fragment;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,21 +12,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.example.baking.MainActivity;
+import com.example.baking.Global;
 import com.example.baking.R;
 import com.example.baking.RecipeItem;
 import com.example.baking.adapter.RecipeListAdapter;
 import com.example.baking.models.recipes;
-import com.example.baking.models.viewModel;
 import com.example.baking.retrofit_connection.Connection;
 import com.example.baking.retrofit_connection.ConnectionInterface;
-import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,32 +29,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.baking.Global.ReceipeResponse;
-
 public class recipeListFragment extends Fragment implements RecipeListAdapter.recipeClickListener {
     RecyclerView rv_recipeList;
     List<recipes> recipesList = new ArrayList<>();
     final RecipeListAdapter mRecipeListAdapter = new RecipeListAdapter(this, this);
-    //  private viewModel mRecipeListLiveData;
-    //  public  RecipeSelection recipeSelectionListener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final List<recipes>[] recipeList = null;
-
-       /* mRecipeListLiveData= ViewModelProviders.of(this).get(viewModel.class);
-
-        // Add an observer on the LiveData returned by getAlphabetizedWords.
-        // The onChanged() method fires when the observed data changes and the activity is
-        // in the foreground.
-        mRecipeListLiveData.LoadRecipeList().observe(this, new Observer<List<recipes>>() {
-            @Override
-            public void onChanged(@Nullable final List<recipes> words) {
-                // Update the cached copy of the words in the adapter.
-                mRecipeListAdapter.setRecipesList(words);
-            }
-        });*/
 
 
     }
@@ -74,29 +47,14 @@ public class recipeListFragment extends Fragment implements RecipeListAdapter.re
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recipe_list_fragment, container, false);
         rv_recipeList = view.findViewById(R.id.rv_recipeList);
-        PrepareRecipeList();
+        loadRecipeFromInternet();
+        //PrepareRecipeList();
         return view;
     }
 
     private void PrepareRecipeList() {
-        //mRecipeListAdapter = new RecipeListAdapter(recipesList);
-        loadRecipeFromInternet();
-     /*   List<recipes> recipesList = new ArrayList<>();
-        try {
 
-            JSONArray recipeResponse = new JSONArray(ReceipeResponse);
-            for (int i = 0; i < recipeResponse.length(); i++) {
-                JSONObject recipeItem = recipeResponse.getJSONObject(i);
-                Gson gson = new Gson();
-                recipes recipes = gson.fromJson(recipeItem.toString(), recipes.class);
-                recipesList.add(recipes);
-                Log.d(">>>ItemNumber->", Integer.toString(i));
-                Log.d(">>>recipeItem", recipeItem.toString());
-            }
-            // liveRecipesList.setValue(recipesList);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
+        loadRecipeFromInternet();
 
     }
 
@@ -128,6 +86,7 @@ public class recipeListFragment extends Fragment implements RecipeListAdapter.re
                 if (response != null) {
                     if (response.body() != null) {
                         recipesList = response.body();
+                        Global.recipeResponse = recipesList;
                         Log.d("Number of movies: ", Integer.toString(recipesList.size()));
                         if (recipesList != null) {
                             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());

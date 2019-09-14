@@ -7,8 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
-import com.example.baking.fragment.recipeListFragment;
-import com.example.baking.fragment.recipeStepsFragment;
+import com.example.baking.fragment.IngredientStepsFragment;
 
 public class RecipeItem extends AppCompatActivity {
 
@@ -26,7 +25,7 @@ public class RecipeItem extends AppCompatActivity {
         bundle.putInt("POSITION",iItemPosition);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        recipeStepsFragment recipeListFragment = new recipeStepsFragment();
+        IngredientStepsFragment recipeListFragment = new IngredientStepsFragment();
         recipeListFragment.setArguments(bundle);
         fragmentTransaction.add(R.id.steps_ingradients_fl,recipeListFragment,recipeListFragment.getTag());
         fragmentTransaction.commit();

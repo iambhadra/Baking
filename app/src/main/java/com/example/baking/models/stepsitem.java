@@ -1,11 +1,13 @@
 package com.example.baking.models;
 
-public class stepsitem {
+import java.io.Serializable;
+
+public class stepsitem implements Serializable {
 
     int id;
     String shortDescription;
     String description;
-    String videoURl;
+    String videoURL;
     String thumbnailURL;
 
     public int getId() {
@@ -33,11 +35,11 @@ public class stepsitem {
     }
 
     public String getVideoURl() {
-        return videoURl;
+        return videoURL;
     }
 
     public void setVideoURl(String videoURl) {
-        this.videoURl = videoURl;
+        this.videoURL = videoURl;
     }
 
     public String getThumbnailURL() {

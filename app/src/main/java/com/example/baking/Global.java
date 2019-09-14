@@ -1,8 +1,14 @@
 package com.example.baking;
 
+import com.example.baking.models.recipes;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Global {
 
-    public static final String ReceipeResponse ="[\n" +
+    public static  List<recipes> recipeResponse = new ArrayList<>();
+    /*public static final String ReceipeResponse ="[\n" +
             "    {\n" +
             "        \"id\": 1,\n" +
             "        \"name\": \"Nutella Pie\",\n" +
@@ -534,5 +540,5 @@ public class Global {
             "        \"servings\": 8,\n" +
             "        \"image\": \"\"\n" +
             "    }\n" +
-            "]";
+            "]";*/
 }
