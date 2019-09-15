@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Global {
 
+    public static final String RECIPELISTRESPONSE = "reciperesponse";
     public static  List<recipes> recipeResponse = new ArrayList<>();
     /*public static final String ReceipeResponse ="[\n" +
             "    {\n" +

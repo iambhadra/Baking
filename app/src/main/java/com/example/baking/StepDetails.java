@@ -3,10 +3,8 @@ package com.example.baking;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +13,6 @@ import android.widget.TextView;
 import com.example.baking.models.stepsitem;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
@@ -29,13 +26,12 @@ public class StepDetails extends AppCompatActivity {
 
     Button btn_next_step;
     TextView tv_recipeDescription;
-    private SimpleExoPlayer  player;
+    private SimpleExoPlayer player;
     private PlayerView vv_step_video;
     private stepsitem procedureItem;
     private long playbackPosition;
     private int currentWindow;
     private boolean playWhenReady;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +39,10 @@ public class StepDetails extends AppCompatActivity {
         Intent intent = getIntent();
         procedureItem = (stepsitem)intent.getSerializableExtra("Steps");
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.tb_stepdetailsheading);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle("Step Description");
+        getSupportActionBar().setBackgroundDrawable(getDrawable(R.color.colorPrimary));
         vv_step_video = findViewById(R.id.vv_step_video);
         tv_recipeDescription = findViewById(R.id.tv_recipeDescription);
         btn_next_step = findViewById(R.id.btn_next_step);

@@ -1,6 +1,8 @@
 package com.example.baking.models;
 
-public class ingredients {
+import java.io.Serializable;
+
+public class ingredients implements Serializable {
     float quantity;
     String measure;
     String ingredient;

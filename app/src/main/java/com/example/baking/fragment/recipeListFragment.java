@@ -26,6 +26,7 @@ import com.example.baking.models.recipes;
 import com.example.baking.retrofit_connection.Connection;
 import com.example.baking.retrofit_connection.ConnectionInterface;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -35,6 +36,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
+import static com.example.baking.Global.RECIPELISTRESPONSE;
 
 public class recipeListFragment extends Fragment implements RecipeListAdapter.recipeClickListener {
     RecyclerView rv_recipeList;
@@ -50,6 +52,15 @@ public class recipeListFragment extends Fragment implements RecipeListAdapter.re
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final List<recipes>[] recipeList = null;
+        if(savedInstanceState!=null){
+            recipesList = (List<recipes>) savedInstanceState.getSerializable(RECIPELISTRESPONSE);
+        }
+        if(getActivity().getResources().getConfiguration().orientation == ORIENTATION_PORTRAIT) {
+
+            mLayoutManager = new GridLayoutManager(getContext(),1);
+        }else{
+            mLayoutManager = new GridLayoutManager(getContext(),2);
+        }
 
 
     }
@@ -57,7 +68,11 @@ public class recipeListFragment extends Fragment implements RecipeListAdapter.re
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if(savedInstanceState!=null){
+            recipesList = (List<recipes>) savedInstanceState.getSerializable(RECIPELISTRESPONSE);
+        }
         if(getActivity().getResources().getConfiguration().orientation == ORIENTATION_PORTRAIT) {
+
             mLayoutManager = new GridLayoutManager(getContext(),1);
         }else{
             mLayoutManager = new GridLayoutManager(getContext(),2);
@@ -123,6 +138,12 @@ public class recipeListFragment extends Fragment implements RecipeListAdapter.re
         rv_recipeList.setItemAnimator(new DefaultItemAnimator());
         rv_recipeList.setAdapter(mRecipeListAdapter);
 
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(RECIPELISTRESPONSE, (Serializable) recipesList);
     }
 
     /*

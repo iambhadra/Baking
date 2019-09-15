@@ -11,13 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
-            android:name=".StepDetails"
+            android:name=".RecipeItem"
             android:configChanges="orientation"
-            android:label="@string/title_activity_step_details"></activity>
-        <activity android:name=".RecipeItem"
-            android:configChanges="orientation"/>
-        <activity android:name=".MainActivity"
+            android:label="Recipe Item"/>
+        <activity
+            android:name=".MainActivity"
             android:configChanges="orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,6 +25,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".StepDetails"
+            android:label="Step Description"
+            android:configChanges="orientation"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
 
 </manifest>

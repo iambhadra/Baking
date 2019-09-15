@@ -1,8 +1,9 @@
 package com.example.baking.models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class recipes {
+public class recipes implements Serializable {
     int id;
     String name;
     List<ingredients> ingredients;

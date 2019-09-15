@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity{
     FragmentManager fragmentManager;
     recipeListFragment recipeListFragment;
     private final String KEY_FRAGMENT_STATE = "fragment_state";
-    private static Bundle mBundleFragmentViewState;
+    private static Bundle mBundleFragmentViewState = new Bundle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +29,17 @@ public class MainActivity extends AppCompatActivity{
         fl_one_container = findViewById(R.id.fl_one_container);
         fl_two_container = findViewById(R.id.fl_two_container);
         fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
         if(savedInstanceState != null)
         {
+
+            //fragmentManager.getFragment(savedInstanceState,"recipeListFragment");
             recipeListFragment  = (recipeListFragment) getSupportFragmentManager().getFragment(savedInstanceState, "recipeItemsFragment");
         }
         else{
+
             recipeListFragment = new recipeListFragment();
         }
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fl_one_container,recipeListFragment,"recipeListFragment");
         fragmentTransaction.commit();
 
@@ -52,7 +55,13 @@ public class MainActivity extends AppCompatActivity{
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        getSupportFragmentManager().putFragment(outState,"recipeItemsFragment",fragmentManager.getFragment(outState,"recipeListFragment"));
+        //Fragment.SavedState  savedState = fragmentManager.saveFragmentInstanceState(recipeListFragment);
+      //  outState.put("recipefragment",savedState);
+        //fragmentManager.saveFragmentInstanceState(recipeListFragment);
+
+      //  getSupportFragmentManager().putFragment(outState,"recipeItemsFragment",fragmentManager.saveFragmentInstanceState(recipeListFragment));
+       // getSupportFragmentManager().putFragment(outState,"recipeItemsFragment",fragmentManager.getFragment(outState,"recipeItemsFragment"));
+        getSupportFragmentManager().putFragment(outState,"recipeItemsFragment", recipeListFragment);
     }
 
     /*@Override
