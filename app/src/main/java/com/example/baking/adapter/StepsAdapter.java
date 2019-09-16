@@ -35,7 +35,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyViewHolder
     public class MyViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener{
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_step_item = itemView.findViewById(R.id.tv_item_name);
+            tv_step_item = itemView.findViewById(R.id.tv_step_name);
             itemView.setOnClickListener(this);
         }
 
@@ -48,7 +48,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyViewHolder
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ingredients_item,viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.step_item,viewGroup,false);
         return new StepsAdapter.MyViewHolder(view);
     }
 

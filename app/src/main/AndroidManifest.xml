@@ -14,11 +14,11 @@
 
         <activity
             android:name=".RecipeItem"
-            android:configChanges="orientation"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="Recipe Item"/>
         <activity
             android:name=".MainActivity"
-            android:configChanges="orientation">
+            android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +27,7 @@
         </activity>
         <activity android:name=".StepDetails"
             android:label="Step Description"
-            android:configChanges="orientation"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
 

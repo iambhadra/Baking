@@ -55,18 +55,6 @@ public class MainActivity extends AppCompatActivity{
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        //Fragment.SavedState  savedState = fragmentManager.saveFragmentInstanceState(recipeListFragment);
-      //  outState.put("recipefragment",savedState);
-        //fragmentManager.saveFragmentInstanceState(recipeListFragment);
-
-      //  getSupportFragmentManager().putFragment(outState,"recipeItemsFragment",fragmentManager.saveFragmentInstanceState(recipeListFragment));
-       // getSupportFragmentManager().putFragment(outState,"recipeItemsFragment",fragmentManager.getFragment(outState,"recipeItemsFragment"));
-        getSupportFragmentManager().putFragment(outState,"recipeItemsFragment", recipeListFragment);
+           getSupportFragmentManager().putFragment(outState,"recipeItemsFragment", recipeListFragment);
     }
-
-    /*@Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        fragmentManager = savedInstanceState.getBundle("recipeItemsFragment");
-    }*/
 }

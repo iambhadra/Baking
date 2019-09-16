@@ -3,18 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<ScrollView
+<!--<ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:layout_gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical">-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
         <TextView
@@ -28,7 +28,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_ingredients"
             android:layout_width="match_parent"
-            android:scrollbarStyle="outsideOverlay"
+            android:layout_gravity="center"
             android:layout_height="100dp">
 
         </android.support.v7.widget.RecyclerView>
@@ -44,8 +44,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_steps"
             android:layout_width="match_parent"
-            android:scrollbarStyle="outsideInset"
+            android:layout_gravity="center"
             android:layout_height="500dp"></android.support.v7.widget.RecyclerView>
     </LinearLayout>
-</ScrollView>
+<!--</ScrollView>-->
 </RelativeLayout>
